@@ -29,7 +29,7 @@ export default function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<AllPostsApiResponse>
 ) {
-	const { page = 2 } = req.query ?? {}
+	const { page = 0 } = req.query ?? {}
 
 	const pageInteger = parseInt(page as string)
 	const start = (pageInteger - 1) * perPage
@@ -37,15 +37,21 @@ export default function handler(
 	const posts = allPosts.slice(start, end)
 	const hasMore = pageInteger < noOfPages
 
-	res.status(200).json({
-		status: true,
-		data: posts,
-		meta: {
-			pagination: {
-				page: pageInteger,
-				hasMore,
-				perPage,
-			},
-		},
+	new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(
+				res.status(200).json({
+					status: true,
+					data: posts,
+					meta: {
+						pagination: {
+							page: pageInteger,
+							hasMore,
+							perPage,
+						},
+					},
+				})
+			)
+		}, 1500)
 	})
 }

@@ -8,8 +8,8 @@ interface QueryMeta extends Record<string, unknown> {
 	}
 }
 
-declare module "@tanstack/react-query" {
-	interface Register {
-		queryMeta: QueryMeta
-	}
-}
+// declare module "@tanstack/react-query" {
+// 	interface Register {
+// 		queryMeta: QueryMeta
+// 	}
+// }
