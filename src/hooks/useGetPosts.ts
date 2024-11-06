@@ -43,7 +43,7 @@ export const useGetPosts = () => {
 	})
 
 	return {
-		isFetchingPosts: isFetchingNextPage,
+		isFetchingPosts: isPending,
 		hasNextPage,
 		fetchNextPage,
 		isFetchingNextPage,

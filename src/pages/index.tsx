@@ -24,7 +24,7 @@ export default function Home() {
 				<h1 className='text-center font-bold text-3xl py-6 '>
 					Infinite Scroll in NextJS
 				</h1>
-				{isFetchingPosts ?? <p>Loading Posts...</p>}
+				{isFetchingPosts && <p className='text-center'>Loading Posts...</p>}
 				{allPosts.map(post => {
 					const { id, title, body } = post
 					return <Post key={id} title={title} body={body} />
