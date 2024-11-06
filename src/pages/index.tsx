@@ -1,8 +1,8 @@
 import { Inter } from "next/font/google"
-import { Fragment } from "react"
+import { Fragment, useRef } from "react"
 import Head from "next/head"
 import { Button, Post } from "@/components"
-import { useGetPosts } from "@/hooks"
+import { useGetPosts, useIntersectionObserver } from "@/hooks"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -15,12 +15,25 @@ export default function Home() {
 		allPosts,
 	} = useGetPosts()
 
+	const buttonWrapperRef = useRef(null)
+	useIntersectionObserver({
+		onIntersect: () => {
+			if (!isFetchingPosts && !isFetchingNextPage) {
+				fetchNextPage()
+			}
+		},
+		ref: buttonWrapperRef.current,
+		options: {
+			rootMargin: "10px",
+			threshold: [1],
+		},
+	})
 	return (
 		<Fragment>
 			<Head>
 				<title>Infinite Scroll in NextJS</title>
 			</Head>
-			<main className={` ${inter.className} max-w-[760px] mx-auto`}>
+			<main className={` ${inter.className} max-w-[760px] mx-auto px-4`}>
 				<h1 className='text-center font-bold text-3xl py-6 '>
 					Infinite Scroll in NextJS
 				</h1>
@@ -30,7 +43,7 @@ export default function Home() {
 					return <Post key={id} title={title} body={body} />
 				})}
 
-				<div className='text-center mt-4 mb-8'>
+				<div className='text-center mt-4 mb-8' ref={buttonWrapperRef}>
 					{hasNextPage && (
 						<Button
 							disabled={isFetchingNextPage}
