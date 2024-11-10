@@ -21,7 +21,6 @@ export const useIntersectionObserver = (
 			for (const entry of entries) {
 				if (Array.isArray(threshold)) {
 					for (const _threshold of threshold) {
-						console.log(entry.intersectionRatio)
 						if (entry.intersectionRatio === _threshold) {
 							onIntersect()
 						}
